@@ -2,24 +2,29 @@ import torch
 import torch.nn as nn
 
 class MultiChannelConvolutionModel(nn.Module):
-    def __init__(self, filter_length):
-        super(MultiChannelConvolutionModel, self).__init__()
+    def __init__(self, args):
+        super().__init__()
+
+        try: self.context = args.context
+        except AttributeError: raise AttributeError("Required attribute 'context' not found in args object.")
+        try: self.input_channels_num = len(args.input_mics_numbers)
+        except AttributeError: raise AttributeError("Required attribute 'input_mics_numbers' not found in args object.")
+        try: self.output_channels_num = len(args.output_mics_numbers)
+        except AttributeError: raise AttributeError("Required attribute 'output_mics_numbers' not found in args object.")
         
-        # Define 4 convolutional filters for the 4 channels of audio
-        self.conv1 = nn.Conv1d(in_channels=1, out_channels=3, kernel_size=filter_length, bias=False)
-        self.conv2 = nn.Conv1d(in_channels=1, out_channels=3, kernel_size=filter_length, bias=False)
-        self.conv3 = nn.Conv1d(in_channels=1, out_channels=3, kernel_size=filter_length, bias=False)
-        self.conv4 = nn.Conv1d(in_channels=1, out_channels=3, kernel_size=filter_length, bias=False)
+        self.filter_length = int(2*self.context)+1 
+        self.conv_layers = nn.ModuleList([
+            nn.Conv1d(
+                in_channels=1,
+                out_channels=self.output_channels_num,
+                kernel_size=self.filter_length,
+                bias=False
+            )
+            for _ in range(self.input_channels_num)
+        ])
         
     def forward(self, x):
-        # Apply the convolution filters on each channel (dim=1)
-        conv1_out = self.conv1(x[:, 0:1, :])  # Only take the 1st channel for convolution
-        conv2_out = self.conv2(x[:, 1:2, :])  # Only take the 2nd channel for convolution
-        conv3_out = self.conv3(x[:, 2:3, :])  # Only take the 3rd channel for convolution
-        conv4_out = self.conv4(x[:, 3:4, :])  # Only take the 4th channel for convolution
         
-        # Average the outputs of all channels
-        out = (conv1_out + conv2_out + conv3_out + conv4_out) 
-        
-        # Return the averaged result
+        outs = [conv(x[:, i:i+1, :]) for i, conv in enumerate(self.conv_layers)]
+        out = torch.sum(torch.stack(outs, dim=0), dim=0)
         return out

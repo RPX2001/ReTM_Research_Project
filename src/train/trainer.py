@@ -30,8 +30,6 @@ def train_closed_form(dataset_root, n_fft=2**13, hop=None, win=None, device='cpu
         loss = loss_time + loss_stft
         print('batch loss', loss.item())
 
-
-
 class Trainer:
     def __init__(self, estimator, loss_fns=None, lr=1e-3, epochs=10, batch_size=4, device="cpu"):
         self.estimator = estimator

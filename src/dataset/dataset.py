@@ -20,4 +20,7 @@ class RTMDataset(Dataset):
         inp, tgt = data
         if self.transform:
             inp, tgt = self.transform(inp, tgt)
-        return inp, tgt
+        return {
+        "input": inp,
+        "target": tgt
+        }
