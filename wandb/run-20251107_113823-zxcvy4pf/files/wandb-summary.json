@@ -1,0 +1,1 @@
+{"val/loss/sdr_db":-7.930199861526489,"train/stft_log_ratio":-7.121646499633789,"val/loss/stft_log_ratio":-6.913670301437378,"train/sdr_db":-8.11140079498291,"epoch":92,"val/metric/sdr_db":7.930199861526489,"_timestamp":1.7624958239508178e+09,"_runtime":120.002479875,"val/metric/stft_log_ratio":-8.174121856689453,"_wandb":{"runtime":120},"_step":92}

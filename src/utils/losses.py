@@ -1,26 +1,60 @@
+from dataclasses import dataclass
+from typing import Callable, Optional
+
 import torch
 import torch.nn as nn
 
-class SDRLoss(nn.Module):
-    def __init__(self, eps: float = 1e-8):
-        super().__init__()
-        self.eps = eps
+from . import metrics
+from src.utils.retm import block_to_complex
 
+
+class SDRLoss(nn.Module):
     def forward(self, output: torch.Tensor, target: torch.Tensor) -> torch.Tensor:
-        noise = target - output
-        signal_power = torch.sum(target**2, dim=1)
-        noise_power = torch.sum(noise**2, dim=1) + self.eps
-        snr = 10 * torch.log10(signal_power / noise_power)
-        return -snr.mean()
+        return metrics.sdr(output, target)
 
 
 class STFTLogRatioLoss(nn.Module):
-    def __init__(self, eps: float = 1e-10):
-        super().__init__()
-        self.eps = eps
+    def forward(self, output: torch.Tensor, target: torch.Tensor) -> torch.Tensor:
+        return metrics.stft_log_ratio(output, target)
 
-    def forward(self, predicted: torch.Tensor, target: torch.Tensor) -> torch.Tensor:
-        sq_err = (torch.abs(predicted - target))**2
-        norm = sq_err / (torch.abs(target)**2 + self.eps)
-        log_err = 10 * torch.log10(norm + self.eps)
-        return torch.mean(log_err)
+
+class ComplexCosineLoss(nn.Module):
+    def forward(self, output: torch.Tensor, target: torch.Tensor) -> torch.Tensor:
+        return metrics.complex_cosine(output, target)
+
+
+class MSELoss(nn.Module):
+    def forward(self, output: torch.Tensor, target: torch.Tensor) -> torch.Tensor:
+        return metrics.mse(output, target)
+
+
+class LSDLoss(nn.Module):
+    def forward(self, output: torch.Tensor, target: torch.Tensor) -> torch.Tensor:
+        return metrics.lsd(output, target)
+
+
+class APDLoss(nn.Module):
+    def forward(self, output: torch.Tensor, target: torch.Tensor) -> torch.Tensor:
+        return metrics.apd(output, target)
+
+
+class RetmLSTFTLoss(nn.Module):
+    def __init__(self, output_channels: int, input_channels: int):
+        super().__init__()
+        self.output_channels = output_channels
+        self.input_channels = input_channels
+
+    def forward(self, output: torch.Tensor, target: torch.Tensor) -> torch.Tensor:
+        pred = block_to_complex(output, self.output_channels, self.input_channels)
+        tgt = block_to_complex(target, self.output_channels, self.input_channels)
+        total, _ = metrics.lstft_loss_retm(pred, tgt)
+        return total
+
+
+@dataclass
+class LossSpec:
+    name: str
+    fn: nn.Module
+    prediction_key: str
+    weight: float = 1.0
+    target_transform: Optional[Callable[..., torch.Tensor]] = None

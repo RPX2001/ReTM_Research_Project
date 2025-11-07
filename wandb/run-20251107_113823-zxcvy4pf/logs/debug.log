@@ -1,0 +1,23 @@
+2025-11-07 11:38:23,800 INFO    MainThread:127599 [wandb_setup.py:_flush():81] Current SDK version is 0.22.3
+2025-11-07 11:38:23,800 INFO    MainThread:127599 [wandb_setup.py:_flush():81] Configure stats pid to 127599
+2025-11-07 11:38:23,800 INFO    MainThread:127599 [wandb_setup.py:_flush():81] Loading settings from /home/lathika/.config/wandb/settings
+2025-11-07 11:38:23,800 INFO    MainThread:127599 [wandb_setup.py:_flush():81] Loading settings from /home/lathika/ReTM_Workspace/ReTM_Project/wandb/settings
+2025-11-07 11:38:23,800 INFO    MainThread:127599 [wandb_setup.py:_flush():81] Loading settings from environment variables
+2025-11-07 11:38:23,800 INFO    MainThread:127599 [wandb_init.py:setup_run_log_directory():706] Logging user logs to /home/lathika/ReTM_Workspace/ReTM_Project/wandb/run-20251107_113823-zxcvy4pf/logs/debug.log
+2025-11-07 11:38:23,801 INFO    MainThread:127599 [wandb_init.py:setup_run_log_directory():707] Logging internal logs to /home/lathika/ReTM_Workspace/ReTM_Project/wandb/run-20251107_113823-zxcvy4pf/logs/debug-internal.log
+2025-11-07 11:38:23,801 INFO    MainThread:127599 [wandb_init.py:init():833] calling init triggers
+2025-11-07 11:38:23,801 INFO    MainThread:127599 [wandb_init.py:init():838] wandb.init called with sweep_config: {}
+config: {'epochs': 500, 'batch_size': 4, 'lr': 0.001, 'save_dir': '/home/lathika/ReTM_Workspace/Outputs/test/LAENet_7', 'test': False, 'checkpoint': None, 'input_mics_numbers': [4, 5, 6, 7], 'output_mics_numbers': [1, 2, 3], 'n_fft': 8192, 'context': 4096, 'lstm_layers': 1, 'grad_clip': None, 'use_amp': True, 'loss_profile': 'waveforms', 'time_weight': 1.0, 'stft_weight': 1.0, 'retm_mse_weight': 1.0, 'retm_lstft_weight': 1.0, 'cs_weight': 1.0, 'mode': 'laenet', 'data_root': '/home/lathika/ReTM_Workspace/Recordings/Table_1_Dataset/Train/train_dataset_A1', 'validation_data_root': '/home/lathika/ReTM_Workspace/Recordings/Table_1_Dataset/Test/test_dataset_A1', 'test_data_root': '/home/lathika/ReTM_Workspace/Recordings/Table_1_Dataset/Test/test_dataset_A1', 'metrics': {'waveforms': ['sdr_db', 'stft_log_ratio'], 'retm': ['mse', 'lstft']}, 'config_path': 'example_configs/config_test.yaml', '_wandb': {}}
+2025-11-07 11:38:23,801 INFO    MainThread:127599 [wandb_init.py:init():881] starting backend
+2025-11-07 11:38:24,007 INFO    MainThread:127599 [wandb_init.py:init():884] sending inform_init request
+2025-11-07 11:38:24,015 INFO    MainThread:127599 [wandb_init.py:init():892] backend started and connected
+2025-11-07 11:38:24,018 INFO    MainThread:127599 [wandb_init.py:init():962] updated telemetry
+2025-11-07 11:38:24,027 INFO    MainThread:127599 [wandb_init.py:init():986] communicating run to backend with 90.0 second timeout
+2025-11-07 11:38:24,972 INFO    MainThread:127599 [wandb_init.py:init():1033] starting run threads in backend
+2025-11-07 11:38:25,031 INFO    MainThread:127599 [wandb_run.py:_console_start():2506] atexit reg
+2025-11-07 11:38:25,031 INFO    MainThread:127599 [wandb_run.py:_redirect():2354] redirect: wrap_raw
+2025-11-07 11:38:25,031 INFO    MainThread:127599 [wandb_run.py:_redirect():2423] Wrapping output streams.
+2025-11-07 11:38:25,031 INFO    MainThread:127599 [wandb_run.py:_redirect():2446] Redirects installed.
+2025-11-07 11:38:25,033 INFO    MainThread:127599 [wandb_init.py:init():1073] run started, returning control to user process
+2025-11-07 11:40:24,976 INFO    wandb-AsyncioManager-main:127599 [service_client.py:_forward_responses():80] Reached EOF.
+2025-11-07 11:40:24,976 INFO    wandb-AsyncioManager-main:127599 [mailbox.py:close():137] Closing mailbox, abandoning 1 handles.

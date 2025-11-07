@@ -1,0 +1,29 @@
+/home/lathika/ReTM_Workspace/ReTM_Project/src/train/trainer.py:48: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.scaler = GradScaler(enabled=self.use_amp and self.optimizer is not None)
+Training laenet on cuda...
+/home/lathika/miniconda3/envs/aud_env/lib/python3.10/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/home/lathika/miniconda3/envs/aud_env/lib/python3.10/site-packages/torchaudio/_backend/ffmpeg.py:88: UserWarning: torio.io._streaming_media_decoder.StreamingMediaDecoder has been deprecated. This deprecation is part of a large refactoring effort to transition TorchAudio into a maintenance phase. The decoding and encoding capabilities of PyTorch for both audio and video are being consolidated into TorchCodec. Please see https://github.com/pytorch/audio/issues/3902 for more information. It will be removed from the 2.9 release.
+  s = torchaudio.io.StreamReader(src, format, None, buffer_size)
+/home/lathika/ReTM_Workspace/ReTM_Project/src/models/laenet.py:63: UserWarning: ComplexHalf support is experimental and many operators don't support it yet. (Triggered internally at /pytorch/aten/src/ATen/EmptyTensor.cpp:55.)
+  out_stft = (out_ri[..., 0::2] + 1j * out_ri[..., 1::2]).permute(0, 3, 1, 2)  # (B, Cout, F, T)
+Traceback (most recent call last):
+  File "/home/lathika/ReTM_Workspace/ReTM_Project/main.py", line 389, in <module>
+    main()
+  File "/home/lathika/ReTM_Workspace/ReTM_Project/main.py", line 383, in main
+    trainer.fit(dataset, val_dataset, save_dir=save_path)
+  File "/home/lathika/ReTM_Workspace/ReTM_Project/src/train/trainer.py", line 175, in fit
+    losses = self._compute_losses(output, inputs, targets)
+  File "/home/lathika/ReTM_Workspace/ReTM_Project/src/train/trainer.py", line 79, in _compute_losses
+    return self._losses_from_specs(output, inputs, target_waveform)
+  File "/home/lathika/ReTM_Workspace/ReTM_Project/src/train/trainer.py", line 113, in _losses_from_specs
+    losses[spec.name] = spec.weight * spec.fn(pred_value, target_value)
+  File "/home/lathika/miniconda3/envs/aud_env/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/lathika/miniconda3/envs/aud_env/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/lathika/ReTM_Workspace/ReTM_Project/src/utils/losses.py", line 13, in forward
+    return metrics.sdr(output, target)
+  File "/home/lathika/ReTM_Workspace/ReTM_Project/src/utils/metrics.py", line 12, in sdr
+    noise = target - pred
+RuntimeError: The size of tensor a (160000) must match the size of tensor b (159744) at non-singleton dimension 2

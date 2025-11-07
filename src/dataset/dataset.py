@@ -21,6 +21,7 @@ class RTMDataset(Dataset):
         if self.transform:
             inp, tgt = self.transform(inp, tgt)
         return {
-        "input": inp,
-        "target": tgt
+            "input": inp,
+            "target": tgt,
+            "path": str(p),
         }

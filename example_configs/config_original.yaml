@@ -1,0 +1,31 @@
+mode: laenet  # Model/solver to run: laenet | fusnet | sconet | closed_form
+data_root: /path/to/train  # Directory containing the training mixtures/targets
+validation_data_root: /path/to/val  # Directory that holds the validation split
+test_data_root: /path/to/test  # Directory for the optional test split (used when --test)
+save_dir: outputs/laenet  # Where checkpoints and metrics will be written
+epochs: 10  # Total number of training epochs (ignored for closed_form)
+batch_size: 4  # Batch size for DataLoader and evaluation loops
+lr: 0.001  # Learning rate for AdamW optimizer
+test: false  # true switches Trainer into evaluation-only mode
+checkpoint: null  # Path to a .pt file to load when resuming or testing
+input_mics_numbers: [4, 5, 6, 7]  # Channel indices to use as inputs (Cin list)
+output_mics_numbers: [1, 2, 3]  # Channel indices to predict/denoise (Cout list)
+n_fft: 8192  # FFT size for STFT/iSTFT across every model
+context: 4096  # Temporal context (samples) for FUSNet receptive field
+lstm_layers: 1  # Number of stacked LSTM layers inside LAENet
+loss_profile: retm  # Loss recipe: retm | waveforms | hybrid (applies to all NN modes)
+time_weight: 1.0  # Global weight used by waveform/time-domain losses (e.g., SDR)
+stft_weight: 1.0  # Weight multiplier for STFT-domain losses/metrics (log ratio, LSD)
+retm_mse_weight: 1.0  # Weight applied to the ReTM MSE objective
+retm_lstft_weight: 1.0  # Weight applied to the ReTM LSTFT objective
+cs_weight: 1.0  # Weight for cosine/phase-style criteria (complex cosine, APD)
+grad_clip: null  # Max L2 norm for gradient clipping; null disables clipping
+use_amp: true  # Enables PyTorch AMP for faster/lower-memory training
+metrics:
+  waveforms: [sdr_db, stft_log_ratio, mse_db, lsd, apd, complex_cosine]  # Logged waveform metrics; controls waveform-profile losses too
+  retm: [mse, lstft]  # ReTM metrics to compute when loss_profile includes ReTM
+wandb:
+  enabled: false  # Toggle Weights & Biases logging
+  project: retm-project  # W&B project slug
+  entity: null  # W&B user or team; null uses your default
+  run_name: laenet-run  # Optional name for the run shown on the W&B dashboard
