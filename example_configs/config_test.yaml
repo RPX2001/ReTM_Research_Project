@@ -1,5 +1,5 @@
 mode: sconet  # Model/solver to run: laenet | fusnet | sconet | closed_form
-data_root: /home/lathika/ReTM_Workspace/Recordings/Table_1_Dataset/Train/train_dataset_A1  # Directory containing the training mixtures/targets
+data_root: D:/Work/Dataset/Section 4 retm training/Train/train_dataset_A1  # Directory containing the training mixtures/targets
 validation_data_root: /home/lathika/ReTM_Workspace/Recordings/Table_1_Dataset/Test/test_dataset_A1  # Directory that holds the validation split
 test_data_root: /home/lathika/ReTM_Workspace/Recordings/Table_1_Dataset/Test/test_dataset_A1  # Directory for the optional test split (used when --test)
 save_dir: /home/lathika/ReTM_Workspace/Outputs/test/SCONet_7 # FUSENet_7 LAENet_7  # Where checkpoints and metrics will be written
